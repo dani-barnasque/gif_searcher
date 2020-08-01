@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gif_searcher/ui/gif_detail.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -118,6 +119,16 @@ class _HomePageState extends State<HomePage> {
               height: 300.0,
               fit: BoxFit.cover,
             ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GifDetail(
+                    snapshot.data['data'][index],
+                  ),
+                ),
+              );
+            },
           );
         } else {
           return Container(
