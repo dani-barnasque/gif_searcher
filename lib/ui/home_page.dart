@@ -5,6 +5,9 @@ import 'package:gif_searcher/ui/gif_detail.dart';
 
 import 'package:http/http.dart' as http;
 
+import 'package:share/share.dart';
+import 'package:transparent_image/transparent_image.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -114,8 +117,10 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (context, index) {
         if (_search == null || index < snapshot.data['data'].length) {
           return GestureDetector(
-            child: Image.network(
-              snapshot.data['data'][index]['images']['fixed_height']['url'],
+            child: FadeInImage.memoryNetwork(
+              placeholder: kTransparentImage,
+              image: snapshot.data['data'][index]['images']['fixed_height']
+                  ['url'],
               height: 300.0,
               fit: BoxFit.cover,
             ),
@@ -128,6 +133,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               );
+            },
+            onLongPress: () {
+              Share.share(snapshot.data['data'][index]['images']['fixed_height']
+                  ['url']);
             },
           );
         } else {
